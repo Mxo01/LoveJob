@@ -1,0 +1,101 @@
+<app-geosupport-modal></app-geosupport-modal>
+
+<div id="map" [hidden]="!inMap"></div>
+<div class="mb-3" id="buttons">
+  <button class="btn btn-light mb-3 shadow" (click)="exitFromAddPosition()" style="width: fit-content;" *ngIf="inMap && onAddingMarker"><i class="bi bi-x"></i></button>
+  <button class="btn btn-light mb-3 shadow" (click)="addMarker()" data-bs-toggle="modal" data-bs-target="#selectLocation" *ngIf="inMap && !onAddingMarker && currentUser?.companyName !== null"><i class="bi bi-plus-lg"></i></button>
+  <button class="btn" data-bs-toggle="modal" data-bs-target="#newMarker" id="newMarkerTrigger" hidden></button>
+  <button class="btn btn-light shadow mb-3" (click)="resetView()" style="width: fit-content;" *ngIf="inMap"><i class="bi bi-geo-alt"></i></button>
+</div>
+<div id="map" *ngIf="inFavorites"><app-favorites (updateFavorites)="onFavoritesUpdate($event)" [favorites]="favorites"></app-favorites></div>
+<div id="map" *ngIf="inChat"><app-chats></app-chats></div>
+<div id="map" *ngIf="inProfile"><app-profile-page (updateUser)="onUpdateUser($event)" [currentUser]="currentUser"></app-profile-page></div>
+
+<app-select-location-modal></app-select-location-modal>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobModal" id="jobModalTrigger" hidden></button>
+
+<div class="modal fade" id="jobModal" tabindex="-1" aria-labelledby="jobModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="jobModalLabel">{{ currentJob.position }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><i class="bi bi-briefcase"></i>{{ ' Company: ' + currentJob.companyName + ', ' + currentJob.name }}</p>
+        <small><i class="bi bi-geo"></i>{{ ' City: ' + currentJob.city + ', ' + currentJob.state }}</small>
+        <br>
+        <small><i class="bi bi-currency-dollar"></i>{{ ' Salary: ' + (currentJob.salary === 0 ? 'not provided' : currentJob.salary)}}</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" *ngIf="!isOwner"><i class="bi bi-chat-dots"></i></button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="addToFavorites()" *ngIf="!isAlreadyFavorite()"><i class="bi bi-heart"></i></button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" disabled *ngIf="isAlreadyFavorite()"><i class="bi bi-heart-fill"></i></button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteMarker()" *ngIf="isOwner"><i class="bi bi-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="newMarker" tabindex="-1" aria-labelledby="newMarkerLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newMarkerLabel">Add open position <i class="bi bi-briefcase"></i></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="exitFromAddPosition()"></button>
+      </div>
+      <div class="modal-body">
+        <form (submit)="submitMarkerToMap()">
+          <div class="d-flex justify-content-around align-items-center">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="company" placeholder="Google" name="company" [(ngModel)]="companyName" (input)="setCompanyName($event)" required>
+              <label for="company">Company name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="name" placeholder="John Doe" name="name" [(ngModel)]="name" (input)="setName($event)" required>
+              <label for="name">Your name</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-around align-items-center">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="position" placeholder="Software Developer" name="position" [(ngModel)]="position" (input)="setPosition($event)" required>
+              <label for="position">Job position</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" min="0" id="salary" placeholder="2500" name="salary" [(ngModel)]="salary" (input)="setSalary($event)">
+              <label for="salary">Salary</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-around align-items-center">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="city" placeholder="Rome" name="city" [(ngModel)]="city" (input)="setCity($event)" required>
+              <label for="city">City</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="state" placeholder="Italy" name="state" [(ngModel)]="state" (input)="setState($event)" required>
+              <label for="state">State</label>
+            </div>
+          </div>
+          <div class="d-grid p-3">
+            <button type="submit" [disabled]="!validateForm()" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottomNav">
+  <nav class="nav d-flex flex-grow-1 justify-content-around">
+    <button class="nav-link d-none d-sm-block" aria-current="page" id="mapLink" (click)="toMap()">Map <i class="bi bi-map"></i></button>
+    <button class="nav-link d-none d-sm-block" aria-current="page" (click)="toFavorites()">Favorites <i class="bi bi-bookmark-heart"></i></button>
+    <button class="nav-link d-none d-sm-block" aria-current="page" (click)="toChat()">Chat <i class="bi bi-chat"></i></button>
+    <button class="nav-link d-none d-sm-block" aria-current="page" (click)="toProfile()">Profile <i class="bi bi-person"></i></button>
+
+    <button class="nav-link d-block d-sm-none" aria-current="page" (click)="toMap()"><i class="bi bi-map"></i></button>
+    <button class="nav-link d-block d-sm-none" aria-current="page" (click)="toFavorites()"><i class="bi bi-bookmark-heart"></i></button>
+    <button class="nav-link d-block d-sm-none" aria-current="page" (click)="toChat()"><i class="bi bi-chat"></i></button>
+    <button class="nav-link d-block d-sm-none" aria-current="page" (click)="toProfile()"><i class="bi bi-person"></i></button>
+  </nav>
+</div>

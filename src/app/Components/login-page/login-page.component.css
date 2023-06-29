@@ -1,0 +1,4 @@
+.form-floating input:not(.is-invalid),
+.form-floating input:not(.is-valid) {
+  padding-right: calc(1.5em + 0.75rem);
+}

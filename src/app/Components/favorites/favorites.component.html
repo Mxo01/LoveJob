@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf="favorites.length === 0">
+  <h1 class="text-center fs-5">No favorites has been added!</h1>
+</div>
+<ul class="list-group" *ngFor="let favorite of favorites">
+  <div class="card text-center m-3">
+    <div class="card-header">
+      <i class="bi bi-briefcase"></i> {{ favorite.companyName }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ favorite.position }}</h5>
+      <p class="card-text">{{ favorite.name }}, from {{ favorite.companyName }}, is searching for a {{ favorite.position }}{{ favorite.salary === 0 ? '.' : ' at $' + favorite.salary }}</p>
+      <button class="btn btn-danger" (click)="removeFavorite(favorite.id)">Remove</button>
+    </div>
+    <div class="card-footer text-body-secondary">
+      <i class="bi bi-geo"></i> {{ favorite.city }}, {{ favorite.state }}
+    </div>
+  </div>
+</ul>

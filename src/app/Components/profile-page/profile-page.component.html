@@ -1,0 +1,79 @@
+<div class="w-100 h-100 container-fluid d-flex justify-content-center align-items-center flex-column">
+  <h1 class="mb-5">Profile</h1>
+  <div class="d-none d-sm-block">
+    <div class="d-flex justify-content-center align-items-center w-100">
+      <div class="input-group mb-3 mx-3">
+        <input type="text" class="form-control" [readOnly]="firstNameRO" placeholder="{{ currentUser?.firstName }}" aria-label="First Name" aria-describedby="editFN" [(ngModel)]="firstName" (input)="setFirstName($event)">
+        <button class="btn btn-outline-success" type="button" id="editFN" *ngIf="firstNameRO" (click)="editFN()">Edit <i class="bi bi-pencil-square"></i></button>
+        <button class="btn btn-outline-success" type="button" (click)="confirmEditFN()" [disabled]="!firstName" id="confirmUsername" *ngIf="!firstNameRO">Save <i class="bi bi-check-lg"></i></button>
+      </div>
+      <div class="input-group mb-3 me-3">
+        <input type="text" class="form-control" [readOnly]="lastNameRO" placeholder="{{ currentUser?.lastName }}" aria-label="Last Name" aria-describedby="editLN" [(ngModel)]="lastName" (input)="setLastName($event)">
+        <button class="btn btn-outline-success" type="button" id="editLN" *ngIf="lastNameRO" (click)="editLN()">Edit <i class="bi bi-pencil-square"></i></button>
+        <button class="btn btn-outline-success" type="button" (click)="confirmEditLN()" [disabled]="!lastName" id="confirmUsername" *ngIf="!lastNameRO">Save <i class="bi bi-check-lg"></i></button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center w-100">
+      <div class="input-group mb-3 mx-3">
+        <input type="text" class="form-control" [readOnly]="emailRO" placeholder="{{ currentUser?.email }}" aria-label="Email" aria-describedby="editEmail" [(ngModel)]="email" (input)="setEmail($event)">
+        <button class="btn btn-outline-success" type="button" id="editEmail" *ngIf="emailRO" (click)="editEmail()">Edit <i class="bi bi-pencil-square"></i></button>
+        <button class="btn btn-outline-success" type="button" (click)="confirmEditEmail()" [disabled]="!email" id="confirmUsername" *ngIf="!emailRO">Save <i class="bi bi-check-lg"></i></button>
+      </div>
+      <div class="input-group mb-3 me-3">
+        <input type="text" class="form-control" disabled placeholder="{{ currentUser?.username }}" aria-label="Username" aria-describedby="editUsername">
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center w-100">
+      <div class="input-group mb-3 mx-3">
+        <input type="text" class="form-control" [readonly]="!editPassword" placeholder="{{ hiddenPassword() }}" aria-label="Password" aria-describedby="editPassword" *ngIf="!editPassword">
+        <button class="btn btn-outline-success" type="button" (click)="setEditPassword()" id="editPassword" *ngIf="!editPassword">Edit <i class="bi bi-pencil-square"></i></button>
+        <input type="text" class="form-control" placeholder="Nuova Password" aria-label="Password" aria-describedby="confirmPassword" *ngIf="editPassword" [(ngModel)]="password" (input)="setPassword($event)">
+        <button class="btn btn-outline-success" type="button" (click)="confirmEditPassword()" [disabled]="!password" id="confirmPassword" *ngIf="editPassword">Save <i class="bi bi-check-lg"></i></button>
+      </div>
+      <div class="input-group mb-3 me-3">
+        <input type="text" class="form-control" [readOnly]="positionOrCompanyRO" placeholder="{{ currentUser?.position === null ? currentUser?.companyName : currentUser?.position }}" aria-label="Last Name" aria-describedby="editPC" [(ngModel)]="positionCompany" (input)="setPositionCompany($event)">
+        <button class="btn btn-outline-success" type="button" id="editPC" *ngIf="positionOrCompanyRO" (click)="editPC()">Edit <i class="bi bi-pencil-square"></i></button>
+        <button class="btn btn-outline-success" type="button" (click)="confirmEditPC()" [disabled]="!positionCompany" id="confirmPC" *ngIf="!positionOrCompanyRO">Save <i class="bi bi-check-lg"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-block d-sm-none">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" [readOnly]="firstNameRO" placeholder="{{ currentUser?.firstName }}" aria-label="First Name" aria-describedby="editFN" [(ngModel)]="firstName" (input)="setFirstName($event)">
+      <button class="btn btn-outline-success" type="button" id="editFN" *ngIf="firstNameRO" (click)="editFN()"><i class="bi bi-pencil-square"></i></button>
+      <button class="btn btn-outline-success" type="button" (click)="confirmEditFN()" [disabled]="!firstName" id="confirmUsername" *ngIf="!firstNameRO"><i class="bi bi-check-lg"></i></button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" [readOnly]="lastNameRO" placeholder="{{ currentUser?.lastName }}" aria-label="Last Name" aria-describedby="editLN" [(ngModel)]="lastName" (input)="setLastName($event)">
+      <button class="btn btn-outline-success" type="button" id="editLN" *ngIf="lastNameRO" (click)="editLN()"><i class="bi bi-pencil-square"></i></button>
+      <button class="btn btn-outline-success" type="button" (click)="confirmEditLN()" [disabled]="!lastName" id="confirmUsername" *ngIf="!lastNameRO"><i class="bi bi-check-lg"></i></button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" [readOnly]="emailRO" placeholder="{{ currentUser?.email }}" aria-label="Email" aria-describedby="editEmail" [(ngModel)]="email" (input)="setEmail($event)">
+      <button class="btn btn-outline-success" type="button" id="editEmail" *ngIf="emailRO" (click)="editEmail()"><i class="bi bi-pencil-square"></i></button>
+      <button class="btn btn-outline-success" type="button" (click)="confirmEditEmail()" [disabled]="!email" id="confirmUsername" *ngIf="!emailRO"><i class="bi bi-check-lg"></i></button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" disabled placeholder="{{ currentUser?.username }}" aria-label="Username" aria-describedby="editUsername">
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" [readonly]="!editPassword" placeholder="{{ hiddenPassword() }}" aria-label="Password" aria-describedby="editPassword" *ngIf="!editPassword">
+      <button class="btn btn-outline-success" type="button" (click)="setEditPassword()" id="editPassword" *ngIf="!editPassword"><i class="bi bi-pencil-square"></i></button>
+      <input type="text" class="form-control" placeholder="Nuova Password" aria-label="Password" aria-describedby="confirmPassword" *ngIf="editPassword" [(ngModel)]="password" (input)="setPassword($event)">
+      <button class="btn btn-outline-success" type="button" (click)="confirmEditPassword()" [disabled]="!password" id="confirmPassword" *ngIf="editPassword"><i class="bi bi-check-lg"></i></button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" [readOnly]="positionOrCompanyRO" placeholder="{{ currentUser?.position === null ? currentUser?.companyName : currentUser?.position }}" aria-label="Last Name" aria-describedby="editPC" [(ngModel)]="positionCompany" (input)="setPositionCompany($event)">
+      <button class="btn btn-outline-success" type="button" id="editPC" *ngIf="positionOrCompanyRO" (click)="editPC()"><i class="bi bi-pencil-square"></i></button>
+      <button class="btn btn-outline-success" type="button" (click)="confirmEditPC()" [disabled]="!positionCompany" id="confirmPC" *ngIf="!positionOrCompanyRO"><i class="bi bi-check-lg"></i></button>
+    </div>
+  </div>
+
+  <div class="mt-3 d-flex flex-column">
+    <a class="btn btn-warning mb-3 w-100" routerLink="/feedbacks" *ngIf="role === 'Admin'">FeedBacks <i class="bi bi-flag"></i></a>
+    <button class="btn btn-primary mb-3 w-100" (click)="logOut()">Log Out <i class="bi bi-box-arrow-left"></i></button>
+    <button class="btn btn-danger w-100" (click)="deleteAccount()">Delete Account <i class="bi bi-trash3"></i></button>
+  </div>
+
+</div>
