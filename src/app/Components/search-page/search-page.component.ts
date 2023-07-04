@@ -42,21 +42,21 @@ export class SearchPageComponent implements AfterViewInit, OnInit {
   currentUser: User | undefined;
 
   markerIconHome = L.icon({
-    iconUrl: '../../assets/markerIconHome.png',
+    iconUrl: 'assets/markerIconHome.png',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -40]
   });
 
   markerIconJob = L.icon({
-    iconUrl: '../../assets/markerIconJob.png',
+    iconUrl: 'assets/markerIconJob.png',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -40]
   });
 
   markerIcon = L.icon({
-    iconUrl: '../../assets/markerIcon.png',
+    iconUrl: 'assets/markerIcon.png',
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -40]

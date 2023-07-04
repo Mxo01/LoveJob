@@ -119,8 +119,4 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
-
-  openManual() {
-    window.open('../../assets/LoveJob.pdf', '_blank');
-  }
 }
