@@ -2,10 +2,10 @@
 
 <div id="map" [hidden]="!inMap"></div>
 <div class="mb-3" id="buttons">
-  <button class="btn btn-light mb-3 shadow" (click)="exitFromAddPosition()" style="width: fit-content;" *ngIf="inMap && onAddingMarker"><i class="bi bi-x"></i></button>
-  <button class="btn btn-light mb-3 shadow" (click)="addMarker()" data-bs-toggle="modal" data-bs-target="#selectLocation" *ngIf="inMap && !onAddingMarker && currentUser?.companyName !== null"><i class="bi bi-plus-lg"></i></button>
+  <button title="Cancel" class="btn btn-light mb-3 shadow" (click)="exitFromAddPosition()" style="width: fit-content;" *ngIf="inMap && onAddingMarker"><i class="bi bi-x"></i></button>
+  <button title="Add open position" class="btn btn-light mb-3 shadow" (click)="addMarker()" data-bs-toggle="modal" data-bs-target="#selectLocation" *ngIf="inMap && !onAddingMarker && currentUser?.companyName !== null"><i class="bi bi-plus-lg"></i></button>
   <button class="btn" data-bs-toggle="modal" data-bs-target="#newMarker" id="newMarkerTrigger" hidden></button>
-  <button class="btn btn-light shadow mb-3" (click)="resetView()" style="width: fit-content;" *ngIf="inMap"><i class="bi bi-geo-alt"></i></button>
+  <button title="Reset location" class="btn btn-light shadow mb-3" (click)="resetView()" style="width: fit-content;" *ngIf="inMap"><i class="bi bi-geo-alt"></i></button>
 </div>
 <div id="map" *ngIf="inFavorites"><app-favorites (updateFavorites)="onFavoritesUpdate($event)" [favorites]="favorites"></app-favorites></div>
 <div id="map" *ngIf="inChat"><app-chats></app-chats></div>
