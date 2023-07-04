@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class DefaultService {
 
   routesLoggedIn: string[] = ['/search', '/profile', 'editprofile'];
 
-  constructor() {
+  constructor(private router: Router) {
     this.userPayload = this.decodeToken();
   }
 
@@ -73,6 +74,6 @@ export class DefaultService {
     localStorage.clear();
     this.setLoggedOut(true);
     this.setRole('');
-    window.location.href = '/'; // TODO: Usare router.navigate ma facendo scomparire il nome dell'utente
+    this.router.navigate(['']).then(() => window.location.reload());
   }
 }

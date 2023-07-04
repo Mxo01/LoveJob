@@ -33,7 +33,7 @@ export class ProfilePageComponent implements OnInit {
 
   role: string = '';
 
-  constructor(private service: DefaultService, private apiService: APIService) {}
+  constructor(private service: DefaultService, private apiService: APIService, private router: Router) {}
 
   ngOnInit(): void {
     this.getRoleSubscription = this.service.roleObs.subscribe({
@@ -252,7 +252,7 @@ export class ProfilePageComponent implements OnInit {
                 this.apiService.deleteFavoritesByUsername(this.currentUser!.username).subscribe({
                   next: () => {
                     localStorage.clear();
-                    window.location.href = '/'; // TODO: Usare ruouter.navigate
+                    this.router.navigate(['']).then(() => window.location.reload());
                   }
                 });
               }

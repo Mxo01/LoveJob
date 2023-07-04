@@ -95,7 +95,7 @@ export class LoginPageComponent implements OnInit {
         this.service.setLoggedOut(false);
         const tokenPayload = this.service.decodeToken();
         this.service.setRole(tokenPayload.role);
-        window.location.href = '/search'; // TODO: Usare router.navigate ma facendo funzionare la sezione feedbacks senza refresh
+        this.router.navigate(['search']).then(() => window.location.reload());
         this.submitted = false;
         this.loggingIn = false;
         this.errorLogIn = false;
