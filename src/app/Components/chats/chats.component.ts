@@ -48,7 +48,8 @@ export class ChatsComponent implements OnInit {
 
   ngOnInit(): void {
     document.addEventListener('keydown', this.escapeChat.bind(this));
-  }
+    document.getElementById('wipBtn')!.click();
+    }
 
   escapeChat(e: KeyboardEvent): void {
     if (e.key === 'Escape') {
