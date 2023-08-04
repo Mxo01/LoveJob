@@ -7,6 +7,8 @@ import { Favorite } from '../Models/favorite.model';
 import { Marker } from '../Models/marker.model';
 import { TokenApi } from '../Models/tokenApi.model';
 import { ResetPassword } from '../Models/resetPassword.model';
+import { Chat } from '../Models/chat.model';
+import { Message } from '../Models/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +92,25 @@ export class APIService {
 
   deleteMarkersByUsername(username: string) {
     return this.http.delete(this.baseUrl + 'deleteMarkers/' + username);
+  }
+
+  getChats(): Observable<Chat[]> {
+    return this.http.get<Chat[]>(this.baseUrl + 'getChats');
+  }
+
+  addChat(chat: Chat) {
+    return this.http.post(this.baseUrl + 'addChat', chat);
+  }
+
+  getMessages(): Observable<Message[]> {
+    return this.http.get<Message[]>(this.baseUrl + 'getMessages');
+  }
+
+  sendMessage(message: Message) {
+    return this.http.post(this.baseUrl + 'sendMessage', message);
+  }
+
+  updateChat(chatId: string, chat: Chat) {
+    return this.http.put(this.baseUrl + 'updateChat/' + chatId, chat);
   }
 }

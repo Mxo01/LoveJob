@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Router } from '@angular/router';
+import { Chat } from '../Models/chat.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,17 @@ export class DefaultService {
 
   private role: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public roleObs = this.role.asObservable();
+
+  private chat: BehaviorSubject<Chat> = new BehaviorSubject<Chat>({
+    id: '',
+    user1: '',
+    name1: '',
+    user2: '',
+    name2: '',
+    lastMessage: '',
+    time: new Date()
+  });
+  public chatObs = this.chat.asObservable();
 
   private userPayload: any;
 
@@ -75,5 +87,9 @@ export class DefaultService {
     this.setLoggedOut(true);
     this.setRole('');
     this.router.navigate(['']).then(() => window.location.reload());
+  }
+
+  addChat(chat: Chat) {
+    this.chat.next(chat);
   }
 }

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { APIService } from 'src/app/Services/api.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Chat } from 'src/app/Models/chat.model';
 
 declare let L: any;
 
@@ -81,6 +82,8 @@ export class SearchPageComponent implements AfterViewInit, OnInit {
 
   private map: any;
 
+  chats: Chat[] = [];
+
   getUserSubscription: Subscription = new Subscription();
   getMarkersSubscription: Subscription = new Subscription();
   getFavoritesSubscription: Subscription = new Subscription();
@@ -116,6 +119,12 @@ export class SearchPageComponent implements AfterViewInit, OnInit {
   constructor(private service: DefaultService, private apiService: APIService) {}
 
   ngOnInit(): void {
+    this.apiService.getChats().subscribe({
+      next: (chats: Chat[]) => {
+        this.chats = chats;
+      }
+    });
+
     this.getUserSubscription = this.apiService.getUser(this.service.getUsernameFromToken()).subscribe({
       next: (user: User) => {
         this.currentUser = user;
@@ -424,6 +433,44 @@ export class SearchPageComponent implements AfterViewInit, OnInit {
       favorite.owner = this.currentUser!.username;
       this.apiService.addFavorite(favorite).subscribe();
       this.favorites.push(favorite);
+    }
+  }
+
+  isAlreadyContacted(): boolean {
+    return this.chats.some((chat) => chat.user1 === this.currentUser!.username && chat.user2 === this.currentJob.by);
+  }
+
+  contactOwner(): void {
+    this.inChat = true;
+    this.inMap = false;
+    this.inFavorites = false;
+    this.inProfile = false;
+
+    if (!this.isAlreadyContacted()) {
+      const chat1: Chat = {
+        id: uuidv4(),
+        user1: this.currentUser!.username,
+        name1: this.currentUser!.firstName + ' ' + this.currentUser!.lastName,
+        user2: this.currentJob.by,
+        name2: this.currentJob.name,
+        lastMessage: '',
+        time: new Date()
+      };
+
+      this.service.addChat(chat1);
+      this.apiService.addChat(chat1).subscribe();
+
+      const chat2: Chat = {
+        id: uuidv4(),
+        user1: this.currentJob.by,
+        name1: this.currentJob.name,
+        user2: this.currentUser!.username,
+        name2: this.currentUser!.firstName + ' ' + this.currentUser!.lastName,
+        lastMessage: '',
+        time: new Date()
+      };
+
+      this.apiService.addChat(chat2).subscribe();
     }
   }
 }

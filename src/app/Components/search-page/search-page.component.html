@@ -29,7 +29,7 @@
         <small><i class="bi bi-currency-dollar"></i>{{ ' Salary: ' + (currentJob.salary === 0 ? 'not provided' : currentJob.salary)}}</small>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" *ngIf="!isOwner"><i class="bi bi-chat-dots"></i></button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="contactOwner()" *ngIf="!isOwner"><i class="bi bi-chat-dots"></i></button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="addToFavorites()" *ngIf="!isAlreadyFavorite()"><i class="bi bi-heart"></i></button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" disabled *ngIf="isAlreadyFavorite()"><i class="bi bi-heart-fill"></i></button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteMarker()" *ngIf="isOwner"><i class="bi bi-trash"></i></button>
