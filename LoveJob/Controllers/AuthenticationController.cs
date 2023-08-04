@@ -177,7 +177,7 @@ namespace LoveJob.Controllers {
             if (feedBack == null) return NotFound(new { Message = "FeedBack Not Found" });
 
             _usersDbContext.Remove(feedBack);
-            _usersDbContext.SaveChanges();
+            await _usersDbContext.SaveChangesAsync();
 
             return Ok(new { Message = "FeedBack Deleted" });
         }
@@ -229,7 +229,7 @@ namespace LoveJob.Controllers {
             if (user == null) return NotFound(new { Message = "User Not Found" });
 
             _usersDbContext.Remove(user);
-            _usersDbContext.SaveChanges();
+            await _usersDbContext.SaveChangesAsync();
 
             return Ok(new { Message = "User Deleted" });
         }
@@ -258,7 +258,7 @@ namespace LoveJob.Controllers {
             if (marker == null) return NotFound(new { Message = "Marker Not Found" });
 
             _usersDbContext.Remove(marker);
-            _usersDbContext.SaveChanges();
+            await _usersDbContext.SaveChangesAsync();
 
             return Ok(new { Message = "Marker Deleted" });
         }
@@ -300,7 +300,7 @@ namespace LoveJob.Controllers {
             if (favorite == null) return NotFound(new { Message = "Favorite Not Found" });
 
             _usersDbContext.Remove(favorite);
-            _usersDbContext.SaveChanges();
+            await _usersDbContext.SaveChangesAsync();
 
             return Ok(new { Message = "Favorite Deleted" });
         }
@@ -316,6 +316,60 @@ namespace LoveJob.Controllers {
             await _usersDbContext.SaveChangesAsync();
 
             return Ok(new { Message = "Favorites Deleted"} );
+        }
+
+        [HttpGet("getChats")]
+        public async Task<IActionResult> GetChats() {
+            var chats = await _usersDbContext.Chats.ToListAsync();
+
+            return Ok(chats);
+        }
+
+        [HttpPost("addChat")]
+        public async Task<IActionResult> AddChat([FromBody] Chat chat) {
+            if (chat == null) return BadRequest();
+
+            await _usersDbContext.Chats.AddAsync(chat);
+            await _usersDbContext.SaveChangesAsync();
+
+            return Ok(new { Message = "Chat Added" });
+        }
+
+        [HttpPut("updateChat/{chatId}")]
+        public async Task<IActionResult> UpdateChat([FromRoute] string chatId, [FromBody] Chat chat) {
+            if (chat == null) return BadRequest();
+
+            var oldChat = await _usersDbContext.Chats.FindAsync(chatId);
+
+            if (oldChat == null) return NotFound(new { Message = "Chat not found" });
+
+            oldChat.User1 = chat.User1;
+            oldChat.Name1 = chat.Name1;
+            oldChat.User2 = chat.User2;
+            oldChat.Name2 = chat.Name2;
+            oldChat.LastMessage = chat.LastMessage;
+            oldChat.Time = chat.Time;
+
+            await _usersDbContext.SaveChangesAsync();
+
+            return Ok(oldChat);
+        }
+
+        [HttpGet("getMessages")]
+        public async Task<IActionResult> GetMessages() {
+            var messages = await _usersDbContext.Messages.ToListAsync();
+
+            return Ok(messages);
+        }
+
+        [HttpPost("sendMessage")]
+        public async Task<IActionResult> SendMessage([FromBody] Message message) {
+            if (message == null) return BadRequest();
+
+            await _usersDbContext.Messages.AddAsync(message);
+            await _usersDbContext.SaveChangesAsync();
+
+            return Ok(new { Message = "Message Added" });
         }
 
         private Task<bool> CheckUsernameExists(string username) {
