@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LoveJob.Context {
     public class UsersDbContext: DbContext {
-        public UsersDbContext(DbContextOptions<UsersDbContext> options): base(options) {
-            
-        }
+        public UsersDbContext(DbContextOptions<UsersDbContext> options): base(options) {}
 
         public DbSet<User> Users { get; set; }
         public DbSet<Marker> Markers { get; set; }
