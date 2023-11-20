@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-select-location-modal',
-  templateUrl: './select-location-modal.component.html',
-  styleUrls: ['./select-location-modal.component.css']
+	selector: "app-select-location-modal",
+	templateUrl: "./select-location-modal.component.html",
+	styleUrls: ["./select-location-modal.component.css"],
 })
 export class SelectLocationModalComponent {
-  constructor() {}
+	constructor() {}
 }

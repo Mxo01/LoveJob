@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prettier": "prettier --write src/**"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,7 @@
     "@angular/router": "^16.0.0",
     "@auth0/angular-jwt": "^5.1.2",
     "@microsoft/signalr": "^7.0.7",
+    "prettier": "3.1.0",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.7.12",
     "tslib": "^2.3.0",
@@ -41,5 +43,22 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "~5.0.2"
-  }
+  },
+	"prettier": {
+		"printWidth": 80,
+		"tabWidth": 4,
+		"useTabs": true,
+		"singleAttributePerLine": false,
+		"bracketSameLine": false,
+		"bracketSpacing": true,
+		"semi": true,
+		"singleQuote": false,
+		"jsxSingleQuote": false,
+		"trailingComma": "es5",
+		"jsxBracketSameLine": false,
+		"arrowParens": "avoid",
+		"htmlWhitespaceSensitivity": "ignore",
+		"vueIndentScriptAndStyle": false,
+		"endOfLine": "auto"
+	}
 }

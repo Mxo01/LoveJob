@@ -1,36 +1,103 @@
-<div class="d-flex justify-content-center align-items-center w-100 h-100" *ngIf="chats.length === 0">
-  <h1 class="text-center fs-5">No chats yet!</h1>
+<div
+	class="d-flex justify-content-center align-items-center w-100 h-100"
+	*ngIf="chats.length === 0"
+>
+	<h1 class="text-center fs-5">No chats yet!</h1>
 </div>
 <div class="d-flex overflow-hidden" id="chatContainer">
-  <div class="w-25 border-end d-none d-xl-block">
-    <div class="sidebar vstack overflow-auto">
-      <div class="chatButton" *ngFor="let chat of chats" (click)="showChat($event)"><app-single-chat [chat]="chat"></app-single-chat></div>
-    </div>
-  </div>
-  <div class="d-block d-xl-none w-100" *ngIf="!displayChat">
-    <div class="vstack overflow-auto">
-      <div class="chatButton" *ngFor="let chat of chats" (click)="showChat($event)"><app-single-chat [chat]="chat"></app-single-chat></div>
-    </div>
-  </div>
-  <div class="w-100 d-flex flex-column justify-content-between align-items-center" *ngIf="displayChat">
-    <div class="background w-100 d-flex justify-content-center align-items-center">
-      <button class="d-flex align-items-center btn btn-dark ms-3 d-block d-xl-none" (click)="displayChat = false"><i class="bi bi-arrow-left"></i></button>
-      <h2 class="me-5 d-flex justify-content-center align-items-center w-100 d-block d-xl-none">{{ chatName }}</h2>
-      <h2 class="d-none d-xl-block">{{ chatName }}</h2>
-    </div>
-    <div class="w-100 d-flex flex-column p-3 overflow-auto" id="messages">
-      <div *ngFor="let message of messages">
-        <div *ngIf="message['sender'] === currentUser && message['receiver'] === receiverUser" class="d-flex justify-content-end" style="width: 100%;">
-          <div class="m-1 text-bg-primary rounded-5 py-2 px-3" style="width: fit-content;">{{ message['body'] }}</div>
-        </div>
-        <div *ngIf="message['sender'] === receiverUser && message['receiver'] === currentUser" class="d-flex justify-content-start" style="width: 100%;">
-          <div class="m-1 text-bg-secondary rounded-5 py-2 px-3" style="width: fit-content;">{{ message['body'] }}</div>
-        </div>
-      </div>
-    </div>
-    <form [formGroup]="sendMessageForm" (submit)="sendMessage()" class="background w-100 d-flex justify-content-center align-items-center">
-      <input formControlName="textMessage" type="text" id="textMessage" class="form-control mx-5">
-      <button [disabled]="!sendMessageForm.valid" class="btn btn-primary me-5"><i class="bi bi-send"></i></button>
-    </form>
-  </div>
+	<div class="w-25 border-end d-none d-xl-block">
+		<div class="sidebar vstack overflow-auto">
+			<div
+				class="chatButton"
+				*ngFor="let chat of chats"
+				(click)="showChat($event)"
+			>
+				<app-single-chat [chat]="chat"></app-single-chat>
+			</div>
+		</div>
+	</div>
+	<div class="d-block d-xl-none w-100" *ngIf="!displayChat">
+		<div class="vstack overflow-auto">
+			<div
+				class="chatButton"
+				*ngFor="let chat of chats"
+				(click)="showChat($event)"
+			>
+				<app-single-chat [chat]="chat"></app-single-chat>
+			</div>
+		</div>
+	</div>
+	<div
+		class="w-100 d-flex flex-column justify-content-between align-items-center"
+		*ngIf="displayChat"
+	>
+		<div
+			class="background w-100 d-flex justify-content-center align-items-center"
+		>
+			<button
+				class="d-flex align-items-center btn btn-dark ms-3 d-block d-xl-none"
+				(click)="displayChat = false"
+			>
+				<i class="bi bi-arrow-left"></i>
+			</button>
+			<h2
+				class="me-5 d-flex justify-content-center align-items-center w-100 d-block d-xl-none"
+			>
+				{{ chatName }}
+			</h2>
+			<h2 class="d-none d-xl-block">{{ chatName }}</h2>
+		</div>
+		<div class="w-100 d-flex flex-column p-3 overflow-auto" id="messages">
+			<div *ngFor="let message of messages">
+				<div
+					*ngIf="
+						message['sender'] === currentUser &&
+						message['receiver'] === receiverUser
+					"
+					class="d-flex justify-content-end"
+					style="width: 100%"
+				>
+					<div
+						class="m-1 text-bg-primary rounded-5 py-2 px-3"
+						style="width: fit-content"
+					>
+						{{ message["body"] }}
+					</div>
+				</div>
+				<div
+					*ngIf="
+						message['sender'] === receiverUser &&
+						message['receiver'] === currentUser
+					"
+					class="d-flex justify-content-start"
+					style="width: 100%"
+				>
+					<div
+						class="m-1 text-bg-secondary rounded-5 py-2 px-3"
+						style="width: fit-content"
+					>
+						{{ message["body"] }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<form
+			[formGroup]="sendMessageForm"
+			(submit)="sendMessage()"
+			class="background w-100 d-flex justify-content-center align-items-center"
+		>
+			<input
+				formControlName="textMessage"
+				type="text"
+				id="textMessage"
+				class="form-control mx-5"
+			/>
+			<button
+				[disabled]="!sendMessageForm.valid"
+				class="btn btn-primary me-5"
+			>
+				<i class="bi bi-send"></i>
+			</button>
+		</form>
+	</div>
 </div>

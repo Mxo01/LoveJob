@@ -1,15 +1,15 @@
 .feedback:hover {
-  background-color: #2b3035;
+	background-color: #2b3035;
 }
 
 .wrapper {
-  height: calc(100svh - 56px);
-  overflow: hidden;
-  padding-bottom: 20px;
+	height: calc(100svh - 56px);
+	overflow: hidden;
+	padding-bottom: 20px;
 }
 
 .feedBackContainer {
-  height: calc(100svh - 56px - 136.05px);
-  overflow: auto;
-  padding-bottom: 20px;
+	height: calc(100svh - 56px - 136.05px);
+	overflow: auto;
+	padding-bottom: 20px;
 }

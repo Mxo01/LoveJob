@@ -1,8 +1,8 @@
 html {
-  height: 100svh;
-  width: 100svw;
+	height: 100svh;
+	width: 100svw;
 }
 
-::-webkit-scrollbar{
-  display: none;
+::-webkit-scrollbar {
+	display: none;
 }

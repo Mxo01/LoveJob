@@ -1,21 +1,22 @@
-#chatContainer, .sidebar {
-  height: 85svh;
+#chatContainer,
+.sidebar {
+	height: 85svh;
 }
 
 .background {
-  background-color: #171c21;
-  height: 80px;
+	background-color: #171c21;
+	height: 80px;
 }
 
 #messages {
-  height: calc(85vh - 160px);
-  overflow: auto;
+	height: calc(85vh - 160px);
+	overflow: auto;
 }
 
 .chatButton {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .focusChat {
-  background-color: #29343e;
+	background-color: #29343e;
 }
